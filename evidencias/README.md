@@ -8,7 +8,7 @@ Las evidencias están organizadas por servicio para facilitar la revisión de la
 
 | N.º | Componente | Evidencia esperada | Estado |
 |---:|---|---|---|
-| 1 | Active Directory | Dominio, usuarios, grupos y equipos | Pendiente |
+| 1 | Active Directory | Dominio, estructura organizativa y roles FSMO | ✅ Completado |
 | 2 | DNS y DHCP | Zonas DNS, ámbitos y asignación de IP | Pendiente |
 | 3 | Políticas GPO | Políticas creadas y aplicadas | Pendiente |
 | 4 | File Server | Carpetas compartidas y permisos | Pendiente |
