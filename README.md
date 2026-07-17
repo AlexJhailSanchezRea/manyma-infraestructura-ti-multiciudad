@@ -16,7 +16,6 @@ Proyecto individual de diseño e implementación de una infraestructura empresar
 </div>
 
 ---
-
 ## Contenido
 
 - [Descripción](#descripción)
@@ -24,8 +23,11 @@ Proyecto individual de diseño e implementación de una infraestructura empresar
 - [Tecnologías](#tecnologías)
 - [Implementación](#implementación)
 - [Validaciones](#validaciones)
+- [Resultados](#resultados)
 - [Evidencias](#evidencias)
+- [Documentación](#documentación)
 - [Estructura del repositorio](#estructura-del-repositorio)
+- [Mejoras futuras](#mejoras-futuras)
 - [Seguridad](#seguridad)
 - [Autor](#autor)
 
@@ -57,6 +59,14 @@ La solución fue implementada completamente en un entorno virtual utilizando Win
 
 ## Arquitectura
 
+### Vista general
+
+![Arquitectura general de MANYMA](diagramas/arquitectura-general-manyma.png)
+
+La infraestructura centraliza los servicios corporativos en la sede principal, utiliza pfSense para segmentación, enrutamiento y seguridad, y permite la comunicación con las sedes remotas mediante VPN.
+
+### Arquitectura lógica resumida
+
 ```mermaid
 flowchart TD
     USERS[Usuarios y estaciones de trabajo]
@@ -72,21 +82,16 @@ flowchart TD
     end
 
     USERS --> SWITCH[Switches y VLAN]
-    SWITCH --> PFSENSE[pfSense<br/>Firewall, routing y VPN]
+    SWITCH --> PFSENSE[pfSense<br/>Firewall, enrutamiento y VPN]
 
     PFSENSE --> MAIN
     PFSENSE --> VPN[Túneles VPN]
 
-    VPN --> SITE1[Sede remota 1]
-    VPN --> SITE2[Sede remota 2]
-    VPN --> SITE3[Sede remota 3]
-
-    MAIN --> BACKUP[Respaldos y continuidad]
+    VPN --> LAPAZ[Sede remota La Paz]
+    VPN --> COCHABAMBA[Sede remota Cochabamba]
 ```
 
-La arquitectura utiliza pfSense como punto central de enrutamiento, segmentación, filtrado y comunicación entre las diferentes redes.
-
----
+pfSense funciona como punto central de enrutamiento, segmentación, filtrado y comunicación entre las diferentes redes.V
 
 ## Tecnologías
 
@@ -188,37 +193,30 @@ La arquitectura utiliza pfSense como punto central de enrutamiento, segmentació
 - Documentación completa de la infraestructura.
 
 ---
-
 ## Evidencias
 
-Las capturas y validaciones se encuentran organizadas por servicio:
+Las capturas y validaciones técnicas se encuentran organizadas en cuatro bloques principales:
 
 | Componente | Evidencias |
 |---|---|
 | Active Directory | [Ver evidencias](evidencias/active-directory/) |
 | DNS y DHCP | [Ver evidencias](evidencias/dns-dhcp/) |
-| GPO | [Ver evidencias](evidencias/gpo/) |
-| File Server y RAID | [Ver evidencias](evidencias/file-server/) |
-| Print Server | [Ver evidencias](evidencias/print-server/) |
-| WSUS | [Ver evidencias](evidencias/wsus/) |
-| pfSense y VLAN | [Ver evidencias](evidencias/pfsense-vlan/) |
-| VPN entre sedes | [Ver evidencias](evidencias/vpn/) |
+| pfSense, VLAN y VPN | [Ver evidencias](evidencias/pfsense-vlan-vpn/) |
+| GPO, File Server y RAID | [Ver evidencias](evidencias/gpo-file-server-raid/) |
 
-> Las evidencias serán incorporadas progresivamente al repositorio.
-
+También puedes consultar el [índice general de evidencias](evidencias/).
 ---
+
+## Documentación
 
 ## Documentación
 
 | Documento | Contenido |
 |---|---|
-| [Arquitectura](docs/arquitectura.md) | Diseño general de la infraestructura |
-| [Direccionamiento IP](docs/direccionamiento-ip.md) | Redes, subredes y asignación de direcciones |
-| [Servicios de Windows Server](configuraciones/servicios-windows-server.md) | Configuración de servicios corporativos |
-| [Políticas GPO](configuraciones/politicas-gpo.md) | Políticas implementadas |
-| [Reglas de pfSense](configuraciones/reglas-pfsense.md) | Reglas de acceso y segmentación |
-| [Informe completo](docs/informe-proyecto.pdf) | Documentación académica del proyecto |
-
+| [Arquitectura](docs/arquitectura.md) | Diseño lógico y funcionamiento general de la infraestructura |
+| [Direccionamiento IP](docs/direccionamiento-ip.md) | Redes, subredes, VLAN, gateways y rangos DHCP |
+| [Diagramas](diagramas/) | Arquitectura general del laboratorio |
+| [Evidencias técnicas](evidencias/) | Capturas y validaciones organizadas por componente |
 ---
 
 ## Estructura del repositorio
@@ -228,25 +226,24 @@ manyma-infraestructura-ti-multiciudad/
 ├── README.md
 ├── docs/
 │   ├── arquitectura.md
-│   ├── direccionamiento-ip.md
-│   └── informe-proyecto.pdf
+│   └── direccionamiento-ip.md
 ├── diagramas/
-│   ├── arquitectura-general.png
-│   └── topologia-red.png
-├── configuraciones/
-│   ├── active-directory.md
-│   ├── servicios-windows-server.md
-│   ├── politicas-gpo.md
-│   └── reglas-pfsense.md
+│   ├── README.md
+│   └── arquitectura-general-manyma.png
 └── evidencias/
+    ├── README.md
     ├── active-directory/
+    │   ├── README.md
+    │   └── evidencias visuales
     ├── dns-dhcp/
-    ├── gpo/
-    ├── file-server/
-    ├── print-server/
-    ├── wsus/
-    ├── pfsense-vlan/
-    └── vpn/
+    │   ├── README.md
+    │   └── evidencias visuales
+    ├── pfsense-vlan-vpn/
+    │   ├── README.md
+    │   └── evidencias visuales
+    └── gpo-file-server-raid/
+        ├── README.md
+        └── evidencias visuales
 ```
 
 ---
