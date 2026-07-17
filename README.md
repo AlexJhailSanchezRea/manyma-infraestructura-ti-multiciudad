@@ -1,156 +1,146 @@
 <div align="center">
 
-# MANYMA – Infraestructura TI Corporativa Multiciudad
+# MANYMA
 
-### Diseño e implementación de una infraestructura empresarial centralizada, segmentada y conectada mediante VPN
+## Gestión Integral de Infraestructura TI Corporativa Multiciudad
 
-![Estado](https://img.shields.io/badge/Estado-Completado-brightgreen)
-![Tipo](https://img.shields.io/badge/Tipo-Proyecto%20académico-blue)
-![Plataforma](https://img.shields.io/badge/Plataforma-VMware-orange)
+Proyecto individual de diseño e implementación de una infraestructura empresarial centralizada, segmentada y conectada mediante VPN.
+
+![Estado](https://img.shields.io/badge/Estado-Completado-success)
+![Año](https://img.shields.io/badge/Año-2026-blue)
+![Tipo](https://img.shields.io/badge/Proyecto-Individual-orange)
 ![Windows Server](https://img.shields.io/badge/Windows-Server-0078D4)
 ![Firewall](https://img.shields.io/badge/Firewall-pfSense-darkblue)
+![Virtualización](https://img.shields.io/badge/Virtualización-VMware-yellow)
 
 </div>
 
 ---
 
-## Descripción general
+## Contenido
 
-MANYMA es un proyecto académico de infraestructura TI orientado a simular el funcionamiento tecnológico de una organización con presencia en varias ciudades.
+- [Descripción](#descripción)
+- [Arquitectura](#arquitectura)
+- [Tecnologías](#tecnologías)
+- [Implementación](#implementación)
+- [Validaciones](#validaciones)
+- [Evidencias](#evidencias)
+- [Estructura del repositorio](#estructura-del-repositorio)
+- [Seguridad](#seguridad)
+- [Autor](#autor)
 
-La solución integra administración centralizada de usuarios y equipos, servicios corporativos, segmentación de red, seguridad perimetral, almacenamiento, actualizaciones y comunicación segura entre sedes.
+---
 
-El laboratorio fue implementado en un entorno virtual controlado, aplicando conceptos de administración de sistemas, redes, virtualización, seguridad y continuidad operativa.
+## Descripción
 
-## Información del proyecto
+MANYMA representa una infraestructura TI corporativa para una organización con presencia en varias ciudades.
+
+El laboratorio integra administración de usuarios y equipos, servicios de red, almacenamiento, impresión, actualizaciones, segmentación, seguridad perimetral y comunicación segura entre sedes.
+
+La solución fue implementada completamente en un entorno virtual utilizando Windows Server, VMware y pfSense.
+
+### Información general
 
 | Característica | Detalle |
 |---|---|
-| Tipo de proyecto | Infraestructura TI corporativa |
 | Modalidad | Proyecto académico individual |
 | Año | 2026 |
-| Entorno | Laboratorio virtual |
+| Duración aproximada | 3 semanas |
 | Plataforma | VMware Workstation |
 | Sistema principal | Windows Server |
 | Firewall | pfSense |
 | Alcance | Sede principal y sedes remotas |
-| Comunicación entre sedes | VPN |
+| Comunicación | VPN entre sedes |
 | Estado | Completado |
 
-## Objetivo general
+---
 
-Diseñar e implementar una infraestructura TI segura, escalable y administrable que permita centralizar usuarios, equipos y servicios, además de proporcionar conectividad segura entre diferentes sedes.
+## Arquitectura
 
-## Objetivos específicos
+```mermaid
+flowchart TD
+    USERS[Usuarios y estaciones de trabajo]
 
-- Centralizar la administración de usuarios y equipos.
-- Configurar servicios corporativos de red.
-- Organizar usuarios mediante grupos y unidades organizativas.
-- Aplicar políticas de seguridad mediante GPO.
-- Segmentar la infraestructura mediante VLAN.
-- Diseñar el direccionamiento IP utilizando VLSM.
-- Conectar las sedes mediante VPN.
-- Proteger el perímetro de red mediante pfSense.
-- Gestionar archivos, impresoras y actualizaciones.
-- Validar la disponibilidad y conectividad de los servicios.
+    subgraph MAIN[Sede principal]
+        AD[Active Directory]
+        DNS[DNS]
+        DHCP[DHCP]
+        GPO[GPO]
+        FILE[File Server y RAID]
+        PRINT[Print Server]
+        WSUS[WSUS]
+    end
 
-## Arquitectura general
+    USERS --> SWITCH[Switches y VLAN]
+    SWITCH --> PFSENSE[pfSense<br/>Firewall, routing y VPN]
 
-```text
-                         ┌─────────────────────────┐
-                         │     Sede principal      │
-                         │                         │
-                         │  Windows Server         │
-                         │  AD DS / DNS / DHCP     │
-                         │  GPO / WSUS             │
-                         │  File y Print Server    │
-                         └────────────┬────────────┘
-                                      │
-                               VLAN y enrutamiento
-                                      │
-                              ┌───────▼───────┐
-                              │    pfSense    │
-                              │ Firewall/VPN  │
-                              └───────┬───────┘
-                                      │
-                               Túneles VPN
-                     ┌────────────────┼────────────────┐
-                     │                │                │
-               ┌─────▼─────┐    ┌─────▼─────┐    ┌─────▼─────┐
-               │ Sede remota│    │ Sede remota│    │ Sede remota│
-               │ Usuarios   │    │ Usuarios   │    │ Usuarios   │
-               │ y equipos  │    │ y equipos  │    │ y equipos  │
-               └────────────┘    └────────────┘    └────────────┘
+    PFSENSE --> MAIN
+    PFSENSE --> VPN[Túneles VPN]
+
+    VPN --> SITE1[Sede remota 1]
+    VPN --> SITE2[Sede remota 2]
+    VPN --> SITE3[Sede remota 3]
+
+    MAIN --> BACKUP[Respaldos y continuidad]
 ```
 
-## Tecnologías utilizadas
+La arquitectura utiliza pfSense como punto central de enrutamiento, segmentación, filtrado y comunicación entre las diferentes redes.
 
-| Categoría | Tecnologías |
+---
+
+## Tecnologías
+
+| Área | Tecnologías y servicios |
 |---|---|
 | Sistemas operativos | Windows Server, Windows 10, Windows 11 y Linux |
 | Virtualización | VMware Workstation |
-| Directorio y usuarios | Active Directory Domain Services |
+| Identidad | Active Directory Domain Services |
 | Servicios de red | DNS y DHCP |
-| Políticas | Group Policy Objects |
+| Administración | Group Policy Objects |
 | Almacenamiento | File Server y RAID |
 | Impresión | Print Server |
 | Actualizaciones | WSUS |
 | Firewall | pfSense |
 | Segmentación | VLAN y VLSM |
 | Acceso remoto | OpenVPN |
-| Seguridad adicional | pfBlockerNG y reglas de firewall |
-| Gestión del tráfico | QoS |
+| Seguridad | Reglas de firewall y pfBlockerNG |
+| Gestión de tráfico | QoS |
 
-## Servicios implementados
+---
 
-| Servicio | Función dentro de la infraestructura |
-|---|---|
-| Active Directory | Administración centralizada de usuarios, grupos y equipos |
-| DNS | Resolución de nombres dentro del dominio |
-| DHCP | Asignación automática de direcciones IP |
-| GPO | Aplicación centralizada de configuraciones y políticas |
-| File Server | Almacenamiento y acceso a carpetas compartidas |
-| Print Server | Administración centralizada de impresoras |
-| RAID | Disponibilidad y protección del almacenamiento |
-| WSUS | Gestión centralizada de actualizaciones |
-| pfSense | Firewall, enrutamiento, control de acceso y VPN |
-| OpenVPN | Comunicación segura entre sedes |
-| VLAN | Separación lógica de áreas y dispositivos |
-| pfBlockerNG | Filtrado y protección adicional del tráfico |
+## Implementación
 
-## Implementación realizada
-
-### Administración de identidad
+### Identidad y control de acceso
 
 - Instalación de Active Directory Domain Services.
 - Creación del dominio corporativo.
-- Configuración de unidades organizativas.
-- Creación de usuarios y grupos.
+- Organización mediante unidades organizativas.
+- Creación de usuarios, grupos y equipos.
 - Unión de estaciones de trabajo al dominio.
 - Asignación de permisos según funciones.
 
 ### Servicios de red
 
 - Configuración de DNS.
-- Implementación de DHCP.
-- Creación de ámbitos y reservas.
-- Diseño del direccionamiento IP mediante VLSM.
-- Validación de resolución de nombres y conectividad.
+- Configuración de DHCP.
+- Creación de ámbitos, exclusiones y reservas.
+- Diseño de direccionamiento mediante VLSM.
+- Validación de conectividad y resolución de nombres.
 
-### Políticas y administración
+### Políticas y administración centralizada
 
 - Creación y aplicación de políticas GPO.
 - Restricción de configuraciones no autorizadas.
-- Administración centralizada de estaciones de trabajo.
+- Administración de equipos del dominio.
 - Gestión de actualizaciones mediante WSUS.
 
-### Archivos, almacenamiento e impresión
+### Almacenamiento e impresión
 
+- Configuración de File Server.
 - Creación de carpetas compartidas.
-- Aplicación de permisos de acceso.
+- Aplicación de permisos según grupos.
 - Implementación de almacenamiento RAID.
 - Configuración de Print Server.
-- Validación de acceso según grupos de usuarios.
 
 ### Redes y seguridad
 
@@ -158,37 +148,78 @@ Diseñar e implementar una infraestructura TI segura, escalable y administrable 
 - Creación de interfaces y redes internas.
 - Segmentación mediante VLAN.
 - Configuración de reglas de firewall.
-- Implementación de túneles VPN.
-- Configuración de OpenVPN.
-- Aplicación de filtrado mediante pfBlockerNG.
+- Implementación de OpenVPN.
+- Comunicación segura entre sedes.
+- Filtrado mediante pfBlockerNG.
 - Priorización de tráfico mediante QoS.
 
-## Validaciones realizadas
+---
 
-| Prueba | Resultado esperado |
+## Validaciones
+
+| Prueba realizada | Resultado |
 |---|---|
-| Unión de equipos al dominio | Equipo registrado y autenticado correctamente |
-| Resolución DNS | Resolución correcta del dominio y servidores |
-| Asignación DHCP | Entrega automática de IP, gateway y DNS |
-| Aplicación de GPO | Políticas aplicadas según usuario o equipo |
-| Acceso a archivos | Acceso permitido según grupo y permisos |
-| Impresión en red | Impresora disponible para usuarios autorizados |
-| Comunicación entre VLAN | Acceso permitido únicamente por reglas definidas |
-| Reglas de firewall | Bloqueo de tráfico no autorizado |
-| Conectividad VPN | Comunicación segura entre sedes |
-| Actualizaciones WSUS | Equipos administrados desde el servidor |
-| Disponibilidad del almacenamiento | Acceso a datos durante las pruebas realizadas |
+| Unión de equipos al dominio | ✅ Correcto |
+| Autenticación de usuarios | ✅ Correcto |
+| Resolución de nombres DNS | ✅ Correcto |
+| Asignación automática mediante DHCP | ✅ Correcto |
+| Aplicación de políticas GPO | ✅ Correcto |
+| Acceso a carpetas compartidas | ✅ Correcto |
+| Aplicación de permisos por grupo | ✅ Correcto |
+| Impresión en red | ✅ Correcto |
+| Comunicación entre VLAN autorizadas | ✅ Correcto |
+| Bloqueo de tráfico no permitido | ✅ Correcto |
+| Comunicación mediante VPN | ✅ Correcto |
+| Administración de actualizaciones | ✅ Correcto |
+| Disponibilidad del almacenamiento | ✅ Correcto |
 
-## Resultados principales
+---
 
-- Administración centralizada de usuarios y equipos.
-- Integración de servicios corporativos en Windows Server.
-- Segmentación lógica de la infraestructura.
+## Resultados
+
+- Administración centralizada de usuarios, grupos y equipos.
+- Implementación de servicios corporativos con Windows Server.
+- Segmentación de áreas mediante VLAN.
 - Comunicación segura entre sedes.
-- Control del tráfico mediante reglas de firewall.
+- Control de acceso mediante reglas de firewall.
 - Gestión centralizada de archivos, impresoras y actualizaciones.
-- Validación de conectividad, acceso y disponibilidad.
-- Documentación técnica de la implementación.
+- Implementación de almacenamiento con tolerancia a fallos.
+- Validación técnica de conectividad, acceso y disponibilidad.
+- Documentación completa de la infraestructura.
+
+---
+
+## Evidencias
+
+Las capturas y validaciones se encuentran organizadas por servicio:
+
+| Componente | Evidencias |
+|---|---|
+| Active Directory | [Ver evidencias](evidencias/active-directory/) |
+| DNS y DHCP | [Ver evidencias](evidencias/dns-dhcp/) |
+| GPO | [Ver evidencias](evidencias/gpo/) |
+| File Server y RAID | [Ver evidencias](evidencias/file-server/) |
+| Print Server | [Ver evidencias](evidencias/print-server/) |
+| WSUS | [Ver evidencias](evidencias/wsus/) |
+| pfSense y VLAN | [Ver evidencias](evidencias/pfsense-vlan/) |
+| VPN entre sedes | [Ver evidencias](evidencias/vpn/) |
+
+> Las evidencias serán incorporadas progresivamente al repositorio.
+
+---
+
+## Documentación
+
+| Documento | Contenido |
+|---|---|
+| [Arquitectura](docs/arquitectura.md) | Diseño general de la infraestructura |
+| [Direccionamiento IP](docs/direccionamiento-ip.md) | Redes, subredes y asignación de direcciones |
+| [Servicios de Windows Server](configuraciones/servicios-windows-server.md) | Configuración de servicios corporativos |
+| [Políticas GPO](configuraciones/politicas-gpo.md) | Políticas implementadas |
+| [Reglas de pfSense](configuraciones/reglas-pfsense.md) | Reglas de acceso y segmentación |
+| [Informe completo](docs/informe-proyecto.pdf) | Documentación académica del proyecto |
+
+---
 
 ## Estructura del repositorio
 
@@ -205,56 +236,49 @@ manyma-infraestructura-ti-multiciudad/
 ├── configuraciones/
 │   ├── active-directory.md
 │   ├── servicios-windows-server.md
-│   ├── reglas-pfsense.md
-│   └── politicas-gpo.md
+│   ├── politicas-gpo.md
+│   └── reglas-pfsense.md
 └── evidencias/
     ├── active-directory/
     ├── dns-dhcp/
+    ├── gpo/
     ├── file-server/
+    ├── print-server/
+    ├── wsus/
     ├── pfsense-vlan/
     └── vpn/
 ```
 
-## Evidencias
+---
 
-Las evidencias técnicas serán organizadas por componente:
+## Mejoras futuras
 
-- Active Directory, usuarios y grupos.
-- Configuración de DNS y DHCP.
-- Aplicación de políticas GPO.
-- File Server y permisos.
-- Print Server.
-- RAID y almacenamiento.
-- WSUS.
-- VLAN y segmentación.
-- Reglas de pfSense.
-- Comunicación mediante VPN.
-
-> Las capturas se agregarán progresivamente en la carpeta `evidencias`.
-
-## Próximas mejoras
-
-- Incorporar monitoreo centralizado de servidores y dispositivos.
-- Automatizar respaldos y pruebas de restauración.
-- Implementar autenticación multifactor.
-- Agregar redundancia para servicios críticos.
+- Implementar monitoreo centralizado de servidores.
+- Automatizar respaldos y pruebas de recuperación.
+- Agregar autenticación multifactor.
+- Incorporar redundancia para servicios críticos.
 - Centralizar registros mediante una solución SIEM.
-- Incorporar servicios híbridos o en la nube.
+- Integrar servicios híbridos o en la nube.
 
-## Consideraciones de seguridad
+---
 
-Este repositorio presenta una implementación académica desarrollada en un entorno virtual.
+## Seguridad
 
-Por seguridad, no se publican:
+Este proyecto fue desarrollado en un entorno académico y virtual.
+
+Por seguridad, el repositorio no publica:
 
 - Contraseñas.
-- Claves privadas.
 - Credenciales administrativas.
-- Datos personales.
+- Claves privadas.
 - Direcciones IP públicas.
-- Archivos con secretos o información sensible.
+- Datos personales.
+- Archivos con secretos.
+- Información de infraestructura real.
 
-Las direcciones IP privadas y nombres utilizados corresponden únicamente al laboratorio.
+Las direcciones IP privadas, nombres de dominio y configuraciones corresponden únicamente al laboratorio.
+
+---
 
 ## Autor
 
@@ -262,3 +286,11 @@ Las direcciones IP privadas y nombres utilizados corresponden únicamente al lab
 Egresado de Ingeniería de Sistemas
 
 [LinkedIn](https://www.linkedin.com/in/alexjhailsanchezrea) · [GitHub](https://github.com/AlexJhailSanchezRea)
+
+---
+
+<div align="center">
+
+Proyecto desarrollado como parte del Examen de Grado de Ingeniería de Sistemas.
+
+</div>
