@@ -2,33 +2,24 @@
 
 ## Objetivo
 
-Implementar una administración centralizada de usuarios, grupos, equipos y permisos mediante Active Directory Domain Services.
+Implementar una administración centralizada de usuarios, grupos, equipos y servicios de dominio mediante Active Directory Domain Services.
 
-## Evidencias requeridas
+## Componentes validados
 
-| Evidencia | Descripción |
+| Componente | Estado |
 |---|---|
-| Dominio configurado | Vista del dominio desde Usuarios y equipos de Active Directory |
-| Unidades organizativas | Estructura de áreas de la organización |
-| Usuarios y grupos | Cuentas y grupos creados según funciones |
-| Equipos del dominio | Estaciones registradas en Active Directory |
-| Inicio de sesión | Validación de acceso con una cuenta del dominio |
+| Dominio corporativo | ✅ Implementado |
+| Estructura de Active Directory | ✅ Documentada |
+| Unidades organizativas | ✅ Implementadas |
+| Usuarios y grupos | ✅ Configurados |
+| Equipos del dominio | ✅ Administrados |
+| Roles FSMO | ✅ Verificados |
 
-## Archivos
-
-Las capturas deben guardarse con estos nombres:
-
-```text
-01-dominio-configurado.png
-02-unidades-organizativas.png
-03-usuarios-y-grupos.png
-04-equipos-del-dominio.png
-05-inicio-sesion-dominio.png
 ## Evidencias visuales
 
 ### 1. Arquitectura de Active Directory
 
-La arquitectura implementada contempla el dominio corporativo y la organización lógica de los servicios de directorio.
+La arquitectura implementada contempla el dominio corporativo y la organización lógica de los servicios de directorio del laboratorio MANYMA.
 
 ![Arquitectura de Active Directory](01-arquitectura-active-directory.png)
 
@@ -36,7 +27,7 @@ La arquitectura implementada contempla el dominio corporativo y la organización
 
 ### 2. Estructura de unidades organizativas
 
-Se organizaron usuarios, grupos, equipos y servidores mediante unidades organizativas para facilitar su administración.
+Se organizaron usuarios, grupos, equipos y servidores mediante unidades organizativas para facilitar la administración, la asignación de permisos y la aplicación de políticas.
 
 ![Estructura de unidades organizativas](02-estructura-ou-dominio-principal.png)
 
@@ -44,6 +35,10 @@ Se organizaron usuarios, grupos, equipos y servidores mediante unidades organiza
 
 ### 3. Roles FSMO
 
-Se verificó la correcta asignación y disponibilidad de los roles FSMO dentro del dominio.
+Se verificó la correcta asignación y disponibilidad de los roles FSMO necesarios para la administración y operación del dominio.
 
 ![Roles FSMO](03-roles-fsmo.png)
+
+## Resultado
+
+La implementación permitió centralizar la administración de identidades, grupos, equipos y recursos del entorno MANYMA mediante Active Directory.
